@@ -2,6 +2,10 @@
 
 Builduild in NodeJS + Javascript + HTML5 + CSS3
 
+## Preview
+
+https://user-images.githubusercontent.com/20600238/205133296-e53c16bd-82a7-45d6-b776-8f6f465fd71c.mp4
+
 ## Installation
 
 Use the npm to install the module dependencies.
