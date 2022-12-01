@@ -4,9 +4,11 @@ Builduild in NodeJS + Javascript + HTML5 + CSS3
 
 ## Installation
 
-Use the npm to install foobar.
+Use the npm to install the module dependencies.
 
 ```bash
+git clone git@github.com:eLyiN/agenda-app.git
+cd agenda-app
 npm install
 ```
 
