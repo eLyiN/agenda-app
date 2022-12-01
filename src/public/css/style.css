@@ -1,0 +1,265 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+  line-height: 1.2;
+  font-family: "Lato", sans-serif;
+  font-weight: var(--fw-base);
+}
+
+:root {
+  --bg-root: rgb(66, 68, 87);
+
+  --bg-primary-rgb: 32, 33, 42;
+  --bg-primary: rgb(var(--bg-primary-rgb));
+  --bg-secondary: rgb(55, 57, 63);
+  --bg-tertiary: rgb(40, 41, 50);
+
+  --hi-success: rgb(17, 201, 0);
+  --hi-warning: rgb(255, 147, 5);
+  --hi-danger: rgb(255, 0, 126);
+  --hi-primary: rgb(138, 149, 255);
+  --hi-secondary: rgb(90, 104, 242);
+  --bg-hi: radial-gradient(
+    74% 185% at -3% 0%,
+    var(--hi-secondary) 0%,
+    var(--hi-primary) 100%
+  );
+
+  --fg-primary: rgb(233, 233, 233);
+  --fg-secondary: rgba(131, 133, 137);
+
+  --fw-sm: 500;
+  --fw-base: 700;
+
+  --sp-base: 16px;
+  --sp-sm-1: calc(7 / 8 * var(--sp-base));
+  --sp-sm-2: calc(6 / 8 * var(--sp-base));
+  --sp-sm-3: calc(5 / 8 * var(--sp-base));
+  --sp-sm-4: calc(4 / 8 * var(--sp-base));
+  --sp-sm-5: calc(3 / 8 * var(--sp-base));
+  --sp-sm-6: calc(2 / 8 * var(--sp-base));
+  --sp-sm-7: calc(1 / 8 * var(--sp-base));
+  --sp-lg-7: calc((1 + 7 / 8) * var(--sp-base));
+  --sp-lg-6: calc((1 + 6 / 8) * var(--sp-base));
+  --sp-lg-5: calc((1 + 5 / 8) * var(--sp-base));
+  --sp-lg-4: calc((1 + 4 / 8) * var(--sp-base));
+  --sp-lg-3: calc((1 + 3 / 8) * var(--sp-base));
+  --sp-lg-2: calc((1 + 2 / 8) * var(--sp-base));
+  --sp-lg-1: calc((1 + 1 / 8) * var(--sp-base));
+
+  /* major third scale
+     factor: 1.250 */
+  --fs-sm-1: 0.8rem;
+  --fs-base: 1rem;
+  --fs-lg-1: 1.25rem;
+  --fs-lg-2: 1.563rem;
+  --fs-lg-3: 1.953rem;
+  --fs-lg-4: 2.441rem;
+
+  --bd-radius: 24px;
+  --bd: 1px solid var(--bg-secondary);
+
+  --transition: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+}
+
+.calendar {
+  --left-margin: var(--sp-base);
+  --hours: calc(var(--end-hour) - var(--start-hour));
+  --rows: calc(var(--resolution) * var(--hours));
+
+  position: relative;
+}
+
+body {
+  background: var(--bg-root);
+
+  display: grid;
+  place-content: center;
+
+  padding: var(--sp-base);
+
+  color: var(--fg-primary);
+}
+
+section {
+  --icon-size: 58px;
+  --padding: var(--sp-lg-1);
+
+  background: var(--bg-tertiary);
+  border: var(--bd);
+  border-radius: var(--bd-radius);
+
+  display: grid;
+  grid-template-rows: max-content 1fr;
+}
+
+section > header {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--sp-sm-1);
+  grid-template-areas:
+    "icon header"
+    "icon sub-header";
+
+  padding: var(--padding);
+}
+
+section > header > .icon {
+  grid-area: icon;
+
+  display: grid;
+  place-content: center;
+  border-radius: calc(2 / 3 * var(--bd-radius));
+
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  background: var(--bg-primary);
+  color: var(--hi-primary);
+}
+
+section > header > h2 {
+  grid-area: header;
+
+  font-size: var(--fs-lg-1);
+  align-self: end;
+}
+
+section > header > p {
+  grid-area: sub-header;
+
+  font-weight: var(--fw-sm);
+}
+
+section > *:nth-child(2) {
+  margin: 0 var(--padding) var(--padding);
+  place-self: stretch;
+}
+
+section {
+  width: 20rem;
+  height: 40rem;
+}
+
+.calendar > * {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.calendar__hour-grid {
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: 1fr;
+}
+
+.calendar__hour {
+  border-top: 1px dashed var(--bg-secondary);
+}
+
+.calendar__hour:last-child {
+  border-bottom: 1px dashed var(--bg-secondary);
+}
+
+.calendar__hour > .label {
+  font-size: var(--fs-sm-1);
+  line-height: 2.5;
+}
+
+.calendar__hour.active {
+  position: relative;
+
+  color: var(--hi-primary);
+}
+
+.calendar__hour.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: calc(1.5 * var(--left-margin));
+  right: 0;
+  height: 1px;
+  top: calc(100% * var(--current-minute) / 60);
+
+  border-bottom: 2px dashed var(--hi-primary);
+}
+
+.calendar__events {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(var(--rows), 1fr);
+
+  left: calc(2 * var(--left-margin));
+}
+
+.calendar__event {
+  --start: 0;
+  --end: 0;
+  --start-row: ;
+
+  grid-row-start: calc(
+    (var(--start) - var(--start-hour)) * var(--resolution) + 1
+  );
+  grid-row-end: calc((var(--end) - var(--start-hour)) * var(--resolution) + 1);
+
+  padding: var(--sp-sm-2);
+  border-radius: calc(2 / 3 * var(--bd-radius));
+
+  background: var(--bg-hi);
+}
+
+.calendar__event > .label {
+  font-weight: var(--fw-sm);
+}
+
+.calendar__event.past {
+  background: var(--bg-primary);
+}
+
+.button-agenda {
+  --icon-size: 58px;
+  --padding: var(--sp-lg-1);
+
+  background: var(--bg-tertiary);
+  border: var(--bd);
+  border-radius: var(--bd-radius);
+
+  display: grid;
+  grid-template-rows: max-content 1fr;
+}
+
+/* CSS */
+.button-34 {
+  background: #5e5df0;
+  border-radius: 999px;
+  box-shadow: #5e5df0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji",
+    NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji",
+    EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda 9000</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="css/agenda.css" />
+  </head>
+  <body>
+    <div class="container h-100 p-4">
+      <div class="row h100">
+        <div class="col-md-4 my-auto">
+          <form id="citas-form" class="card card-body rounded-0">
+            FECHA:<input
+              id="fecha"
+              type="text"
+              class="form-control rounded-0 mb-3"
+              placeholder="01/01/2022"
+              autofocus
+            />
+            HORA:<input
+              id="hora"
+              class="form-control rounded-0 mb-3"
+              placeholder="10:00"
+            />
+            TIEMPO:<input
+              id="tiempo"
+              class="form-control rounded-0 mb-3"
+              placeholder="Escriba en minutos.."
+            />
+            DESCRIPCIÓN:<input
+              id="descripcion"
+              class="form-control rounded-0 mb-3"
+              placeholder="Escriba una descripción..."
+            />
+            <button type="submit" class="btn btn-dark rounded-0">Enviar</button>
+          </form>
+          <div>
+            <a href="index.html"><button>Volver</button></a>
+          </div>
+        </div>
+        <div class="col-md-8" id="citas-list">
+          <h1>Lista de citas</h1>
+        </div>
+      </div>
+    </div>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="./javascript/main.js" type="module"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
