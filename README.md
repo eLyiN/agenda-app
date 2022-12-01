@@ -1,6 +1,6 @@
 # Agenda APP
 
-Builduild in NodeJS + Javascript + HTML5 + CSS3
+Built in NodeJS + Javascript + HTML5 + CSS3
 
 ## Preview
 
