@@ -59,52 +59,46 @@ calendar.style.setProperty(
 calendar.style.setProperty(
   '--resolution', resolution);
 
-if (europeanDate)
+fetch('/citas')
+  .then(response => response.json())
+  .then(citas => {
+    citas.forEach(cita => {
+      console.log('cita fecha', cita.fecha);
+      if (europeanDate === cita.fecha) {
 
-  fetch('/citas')
-    .then(response => response.json())
-    .then(citas => {
-      citas.forEach(cita => {
-        console.log('cita fecha', cita.fecha);
-        if (europeanDate === cita.fecha) {
-
-          const time = cita.hora.split(':');
-          const timeInt = Math.ceil(parseInt(time[1]) + parseInt(time[0]) * 60);
-          console.log('timeInt', timeInt);
-          const floatTime = timeInt / 60;
-          console.log('floatTime', floatTime);
-          const timeInSec = cita.tiempo / 60;
-          console.log('timeInSec', timeInSec);
-          const eventPast = () => {
-            if (floatTime + timeInSec > currentHour) {
-              return false;
-            } else {
-              return true;
-            }
-          }
-          console.log('eventPast', eventPast());
-          const eventNode = eventTemplate.content
-            .firstElementChild.cloneNode(true);
-          calendarEvents.appendChild(eventNode);
-
-          eventNode.querySelector('.label')
-            .innerText = cita.descripcion;
-          eventNode.style.setProperty(
-            '--start', floatTime);
-          eventNode.style.setProperty(
-            '--end', (floatTime + timeInSec));
-          console.log('cita.end', floatTime + timeInSec);
-          eventNode.style.setProperty(
-            '--resolution', resolution);
-          if (eventPast()) {
-            eventNode.classList.add('past');
+        const time = cita.hora.split(':');
+        const timeInt = Math.ceil(parseInt(time[1]) + parseInt(time[0]) * 60);
+        console.log('timeInt', timeInt);
+        const floatTime = timeInt / 60;
+        console.log('floatTime', floatTime);
+        const timeInSec = cita.tiempo / 60;
+        console.log('timeInSec', timeInSec);
+        const eventPast = () => {
+          if (floatTime + timeInSec > currentHour) {
+            return false;
+          } else {
+            return true;
           }
         }
-        else {
-          console.log('no hay citas');
-          alert('No hay citas para este día');
+        console.log('eventPast', eventPast());
+        const eventNode = eventTemplate.content
+          .firstElementChild.cloneNode(true);
+        calendarEvents.appendChild(eventNode);
+
+        eventNode.querySelector('.label')
+          .innerText = cita.descripcion;
+        eventNode.style.setProperty(
+          '--start', floatTime);
+        eventNode.style.setProperty(
+          '--end', (floatTime + timeInSec));
+        console.log('cita.end', floatTime + timeInSec);
+        eventNode.style.setProperty(
+          '--resolution', resolution);
+        if (eventPast()) {
+          eventNode.classList.add('past');
         }
-      });
+      }
     });
+  });
 
 
