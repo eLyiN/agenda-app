@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import { getDates, getDate, insertDate, updateDate, deleteDate  } from './db';
+import { getDates, getDate, insertDate, updateDate, deleteDate } from './db';
 
 const app = express()
 
